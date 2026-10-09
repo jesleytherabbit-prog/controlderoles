@@ -188,7 +188,7 @@ html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!i
 a.rlink{color:inherit;text-decoration-color:currentColor;text-underline-offset:3px}
 *{box-sizing:border-box}
 body{background:var(--bg);background-image:var(--bg-img);background-attachment:fixed;color:var(--fg);font-family:var(--ff-body);font-size:var(--fs);line-height:1.5;min-height:100%}
-.wrap{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:1560px;margin:0 auto;padding-inline:16px;padding-block:24px 64px}
 h1,h2,h3,.lbl,button,select,.tabs a,th{font-family:var(--ff-head)}
 h1{font-family:var(--ff-display);font-size:clamp(1.7rem,4vw,2.4rem);font-weight:400;margin:0;color:var(--accent);background:var(--title-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-wrap:balance;letter-spacing:.01em}
 h2{font-size:1.25rem;font-weight:400;margin:0;color:var(--accent);text-wrap:balance}
@@ -234,9 +234,20 @@ select.chip{appearance:none;-webkit-appearance:none;font-family:var(--ff-head);f
 .c-rose{color:var(--rose-fg)} .c-mint{color:var(--mint-fg)} .c-peach{color:var(--peach-fg)} .c-lilac{color:var(--lilac-fg)}
 .c-sage{color:var(--sage-fg)} .c-sky{color:var(--sky-fg)} .c-sand{color:var(--sand-fg)} .c-gray{color:var(--gray-fg)}
 .c-gold{color:var(--gold-fg)} .c-terra{color:var(--terra-fg)}
-.con{display:flex;gap:4px;align-items:center;min-width:14rem}
-.con input{font-weight:600}
-.con select{width:auto;font-size:.8rem;color:var(--muted)}
+.con{display:flex;flex-direction:column;gap:2px;min-width:14rem}
+.con-p{display:flex;align-items:center;gap:4px;min-width:0}
+.con-p input.cell{flex:1;min-width:0}
+.wheel{flex:none;width:22px;height:22px;border-radius:50%;padding:3px;cursor:pointer;background:conic-gradient(#e2546b,#f0a23b,#e8d54a,#6cc46a,#4bb3d6,#6a6fd6,#b45ad0,#e2546b);display:grid;place-items:center;position:relative}
+.wheel input{appearance:none;-webkit-appearance:none;width:16px;height:16px;border:2px solid var(--surface);border-radius:50%;padding:0;background:none;cursor:pointer}
+.wheel input::-webkit-color-swatch-wrapper{padding:0}
+.wheel input::-webkit-color-swatch{border:none;border-radius:50%}
+.wheel input::-moz-color-swatch{border:none;border-radius:50%}
+.wheel.unset input{opacity:0}
+.wheel.unset::after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--surface);pointer-events:none}
+.wheel:focus-within{outline:2px solid var(--focus);outline-offset:2px}
+.add2{font-size:.75rem;padding:2px 6px;white-space:nowrap;color:var(--accent)}
+.con input.cell{font-weight:600}
+
 .lim-over{background:var(--rose-bg);color:var(--rose-fg);border-radius:6px}
 .lim-soon{background:var(--peach-bg);color:var(--peach-fg);border-radius:6px}
 .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
@@ -257,8 +268,27 @@ select.chip{appearance:none;-webkit-appearance:none;font-family:var(--ff-head);f
 .sw{width:22px;height:22px;border-radius:50%;border:2px solid var(--surface);padding:0;box-shadow:0 0 0 1px var(--line)}
 .sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--fg)}
 .counts{font-family:var(--ff-head);font-size:.9rem;display:flex;flex-wrap:wrap;gap:6px 14px}
-.turn-grid{display:flex;gap:3px}
-.tc{width:30px;height:30px;border-radius:6px;border:1px solid var(--line);padding:0;font-size:.75rem;display:grid;place-items:center;flex:none}
+.turn-grid{display:flex;flex-wrap:wrap;gap:3px;width:calc(12 * 28px + 11 * 3px)}
+/* Tablas anchas sin scroll: columnas fijas en pantallas grandes, tarjetas en pantallas angostas */
+table.stack{table-layout:fixed}
+table.stack td{overflow:hidden}
+table.stack .cell{min-width:0!important}
+table.stack select.chip{max-width:100%;text-overflow:ellipsis}
+table.stack .con{min-width:0}
+table.stack .link-cell{min-width:0}
+table.stack input[type="date"].cell{min-width:0;font-size:.9em;padding-inline:2px}
+@media (max-width:980px){
+  .tbl-wrap:has(table.stack){overflow:visible;border:0}
+  table.stack,table.stack tbody{display:block}
+  table.stack thead{display:none}
+  table.stack tr{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:4px 12px;padding:12px 40px 12px 12px;border:var(--bw) solid var(--line);border-radius:var(--r);margin-bottom:10px;position:relative;background:var(--surface)}
+  table.stack td{display:block;border:0;padding:0;overflow:visible}
+  table.stack td[data-l]::before{content:attr(data-l);display:block;font-family:var(--ff-head);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:2px 6px 0}
+  table.stack td.wide{grid-column:1/-1}
+  table.stack td.del{position:absolute;top:6px;right:4px}
+  table.stack td.empty{grid-column:1/-1}
+}
+.tc{width:28px;height:28px;border-radius:6px;border:1px solid var(--line);padding:0;font-size:.75rem;display:grid;place-items:center;flex:none}
 .tc.s-sin{background:var(--surface);color:var(--muted)}
 .gan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:16px}
 .card{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;min-width:0}
@@ -300,7 +330,7 @@ details summary{cursor:pointer;font-family:var(--ff-head);color:var(--accent)}
 (()=>{
 const TIPOS=[["Oficial","terra","🎓"],["Acontecimiento","sage","🎉"],["Gesta","gold","⚔️"],["Evento","lilac","🎪"],["Misión","sage","🗺️"],["Clases","sky","📚"],["Libre","sand","🌼"],["Grupal","gray","👥"]];
 const ESTADOS=[["Sin Contestar","rose","📪"],["Contestado","mint","✅"],["Pausado","peach","⏸️"],["Terminado","lilac","🏁"]];
-const CASAS=[["","",""],["Slytherin","sage","🐍"],["Ravenclaw","sky","🦅"],["Hufflepuff","gold","🦡"],["Gryffindor","rose","🦁"],["Ex-Slytherin","mint","🐍💤"],["Ex-Ravenclaw","sky","🦅💤"],["Ex-Hufflepuff","gold","🦡💤"],["Ex-Gryffindor","rose","🦁💤"]];
+const CASA_HEX={"slytherin":"#3F5B41","ravenclaw":"#3B6E8C","hufflepuff":"#8A6A1F","gryffindor":"#9B4A5F"}; /* solo para pasar datos viejos (casas) a colores */
 const TURNOS=[["Sin Postear","sin","·"],["Rápido","mint","⚡"],["Normal","lilac","🌸"],["Lento","sky","🐌"],["Falta Justificada","peach","FJ"],["Falta Injustificada","rose","FI"]];
 const TONOS=["mint","sky","terra","gold","lilac","rose","sage","peach","sand","gray"];
 const OF_EST=[["Disponible","mint","🌸"],["Ocupado","rose","💌"]];
@@ -335,12 +365,12 @@ function ejemplo(){
     personajes:[
       {id:uid(),nombre:"Personaje 1",emoji:"🌿",tono:"mint",
        roles:[
-        {id:uid(),nombre:"Entre jardines (ejemplo)",con:"Nombre del compañero",casa:"Ravenclaw",tipo:"Libre",fecha:"Marzo 2033",estado:"Contestado",limite:"",enlace:"https://hp-avada-kedavra.foroactivo.com"},
-        {id:uid(),nombre:"Trama grupal (ejemplo)",con:"Grupal",casa:"",tipo:"Grupal",fecha:"Agosto 2033",estado:"Sin Contestar",limite:fechaISO(2)},
-        {id:uid(),nombre:"Rol oficial (ejemplo)",con:"Otro personaje",casa:"Gryffindor",tipo:"Oficial",fecha:"Octubre 2033",estado:"Terminado",limite:""}],
+        {id:uid(),nombre:"Entre jardines (ejemplo)",con:"Nombre del compañero",color:"#3B6E8C",con2:"Otro PJ",color2:"#C0587E",dos:true,tipo:"Libre",fecha:"Marzo 2033",estado:"Contestado",limite:"",enlace:"https://hp-avada-kedavra.foroactivo.com"},
+        {id:uid(),nombre:"Trama grupal (ejemplo)",con:"Grupal",color:"",tipo:"Grupal",fecha:"Agosto 2033",estado:"Sin Contestar",limite:fechaISO(2)},
+        {id:uid(),nombre:"Rol oficial (ejemplo)",con:"Otro personaje",color:"#9B4A5F",tipo:"Oficial",fecha:"Octubre 2033",estado:"Terminado",limite:""}],
        ganancias:[{id:uid(),concepto:"💰 Sueldo mensual",monto:0,fijo:fj[0].id,estado:"Cobrado"},{id:uid(),concepto:"⭐ Puntos",monto:90,fijo:"",estado:"Cobrado"},{id:uid(),concepto:"✨ Extras",monto:20,fijo:"",estado:"Sin Cobrar"}]},
       {id:uid(),nombre:"Personaje 2",emoji:"🦊",tono:"terra",
-       roles:[{id:uid(),nombre:"Una misión (ejemplo)",con:"Grupal",casa:"",tipo:"Misión",fecha:"",estado:"Pausado",limite:fechaISO(-1)}],
+       roles:[{id:uid(),nombre:"Una misión (ejemplo)",con:"Grupal",color:"",tipo:"Misión",fecha:"",estado:"Pausado",limite:fechaISO(-1)}],
        ganancias:[{id:uid(),concepto:"📚 Clases",monto:40,fijo:"",estado:"Sin Cobrar"},{id:uid(),concepto:"📰 Periódico",monto:0,fijo:fj[1].id,estado:"Cobrado"}]}],
     fijos:fj,
     turnos:{tarifas:{rapido:25,normal:20,lento:15,falta:20},
@@ -387,6 +417,9 @@ async function initDb(){
 
 /* ---------- utilidades ---------- */
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2200);}
+function conRow(nombre,color,fN,fC,ph,extra){const has=/^#[0-9a-f]{6}$/i.test(color||"");
+  return `<div class="con-p"><label class="wheel${has?"":" unset"}" title="Elegir color"><input type="color" data-f="${fC}" value="${has?color:"#ffffff"}" aria-label="Color de ${ph}"></label><input class="cell" data-f="${fN}" value="${esc(nombre||"")}" aria-label="${ph}" placeholder="${ph}"${has?` style="color:${color}"`:""}>${extra||""}</div>`;}
+function migrar(){S.personajes.forEach(p=>p.roles.forEach(r=>{if(r.casa!==undefined){if(!r.color){const k=String(r.casa).toLowerCase().replace("ex-","");r.color=CASA_HEX[k]||"";}delete r.casa;}}));}
 function opts(list,v){return list.map(([n,,e])=>`<option value="${esc(n)}"${n===v?" selected":""}>${e?e+" ":""}${esc(n||"— casa —")}</option>`).join("");}
 function chipSel(list,v,attrs){const t=find(list,v)[1];return `<select class="cell chip t-${t}" ${attrs}>${opts(list,v)}</select>`;}
 function chip(list,v,txt){const [n,t,e]=find(list,v);return `<span class="chip-s t-${t}">${e} ${esc(txt??n)}</span>`;}
@@ -424,7 +457,7 @@ V.inicio=()=>{
   <div class="legend">
     <div><div class="lbl">🏷️ Tipo de rol</div><div class="chips">${TIPOS.map(([n])=>chip(TIPOS,n)).join("")}</div></div>
     <div><div class="lbl">🌤️ Estado</div><div class="chips">${ESTADOS.map(([n])=>chip(ESTADOS,n)).join("")}<span class="chip-s t-rose">⌛ Límite vencido</span><span class="chip-s t-peach">⏳ Límite ≤ 3 días</span></div></div>
-    <div><div class="lbl">🦁 Casa (color del nombre en «Con»)</div><div class="chips">${CASAS.slice(1).map(([n])=>chip(CASAS,n)).join("")}</div></div>
+    <div><div class="lbl">🎨 Color de cada compañero</div><p class="small muted" style="margin:0">Tocá la ruedita al lado del nombre en «Con» para elegirle un color. Con «+ PJ» sumás un segundo compañero con su propio color.</p></div>
   </div></section>`;
 };
 function fmtFecha(iso){if(!iso)return"";const [y,m,d]=iso.split("-");return `${d}/${m}/${y}`;}
@@ -435,15 +468,15 @@ V.personajes=()=>{
   const sel=`<div class="row between"><div class="pjs">${S.personajes.map(x=>`<button class="pj-tab c-${x.tono}" aria-pressed="${x.id===pjSel}" data-act="pj" data-id="${x.id}">${esc(x.emoji)} ${esc(x.nombre)}</button>`).join("")}</div><button class="primary" data-act="addPj">+ Personaje</button></div>`;
   if(!p)return sel+`<p class="empty">Agregá tu primer personaje para empezar a anotar sus roles.</p>`;
   const c=cuenta(p);
-  const filas=p.roles.map(r=>{const casa=find(CASAS,r.casa)[1],l=limEstado(r);return `<tr data-rid="${r.id}">
-    <td><input class="cell" style="min-width:14rem;font-weight:600" data-f="nombre" value="${esc(r.nombre)}" aria-label="Nombre de rol" placeholder="Nombre del rol"></td>
-    <td><div class="con"><input class="cell ${casa?"c-"+casa:""}" data-f="con" value="${esc(r.con)}" aria-label="Con" placeholder="Con quién"><select class="cell" data-f="casa" aria-label="Casa">${opts(CASAS,r.casa)}</select></div></td>
-    <td>${chipSel(TIPOS,r.tipo,'data-f="tipo" aria-label="Tipo de rol"')}</td>
-    <td><input class="cell" style="min-width:8rem" data-f="fecha" value="${esc(r.fecha)}" aria-label="Fecha" placeholder="Fecha en el rol"></td>
-    <td>${chipSel(ESTADOS,r.estado,'data-f="estado" aria-label="Estado"')}</td>
-    <td class="${l?"lim-"+l:""}"><input type="date" class="cell" data-f="limite" value="${esc(r.limite)}" aria-label="Fecha límite"></td>
-    <td>${linkCell(r.enlace,'data-f="enlace"')}</td>
-    <td><button class="ghost" data-act="delRol" aria-label="Borrar rol">✕</button></td></tr>`;}).join("");
+  const filas=p.roles.map(r=>{const l=limEstado(r);return `<tr data-rid="${r.id}">
+    <td class="wide" data-l="📖 Nombre de rol"><input class="cell" style="min-width:14rem;font-weight:600" data-f="nombre" value="${esc(r.nombre)}" aria-label="Nombre de rol" placeholder="Nombre del rol"></td>
+    <td data-l="💌 Con"><div class="con">${conRow(r.con,r.color,"con","color","Con quién",r.dos?"":`<button class="ghost add2" data-act="add2" title="Sumar otro PJ a este rol" aria-label="Sumar otro PJ">+ PJ</button>`)}${r.dos?conRow(r.con2,r.color2,"con2","color2","Otro PJ",`<button class="ghost" data-act="del2" title="Quitar este PJ" aria-label="Quitar segundo PJ">✕</button>`):""}</div></td>
+    <td data-l="🏷️ Tipo">${chipSel(TIPOS,r.tipo,'data-f="tipo" aria-label="Tipo de rol"')}</td>
+    <td data-l="🗓️ Fecha"><input class="cell" style="min-width:8rem" data-f="fecha" value="${esc(r.fecha)}" aria-label="Fecha" placeholder="Fecha en el rol"></td>
+    <td data-l="🌤️ Estado">${chipSel(ESTADOS,r.estado,'data-f="estado" aria-label="Estado"')}</td>
+    <td data-l="⏳ Fecha límite" class="${l?"lim-"+l:""}"><input type="date" class="cell" data-f="limite" value="${esc(r.limite)}" aria-label="Fecha límite"></td>
+    <td data-l="🔗 Enlace">${linkCell(r.enlace,'data-f="enlace"')}</td>
+    <td class="del"><button class="ghost" data-act="delRol" aria-label="Borrar rol">✕</button></td></tr>`;}).join("");
   return sel+`
   <div class="pj-head t-${p.tono}">
     <input class="emo" data-pf="emoji" value="${esc(p.emoji)}" aria-label="Emoji" maxlength="4">
@@ -453,7 +486,7 @@ V.personajes=()=>{
     <button class="ghost" data-act="delPj">Borrar personaje</button>
   </div>
   <div class="counts">${ESTADOS.map(([n,t,e])=>`<span class="c-${t}">${e} ${n}: <strong>${c[n]}</strong></span>`).join("")}</div>
-  <div class="tbl-wrap"><table><thead><tr><th>📖 Nombre de rol</th><th>💌 Con</th><th>🏷️ Tipo</th><th>🗓️ Fecha</th><th>🌤️ Estado</th><th>⏳ Fecha límite</th><th>🔗 Enlace</th><th></th></tr></thead>
+  <div class="tbl-wrap"><table class="stack"><thead><tr><th style="width:18%">📖 Nombre de rol</th><th style="width:23%">💌 Con</th><th style="width:11%">🏷️ Tipo</th><th style="width:11%">🗓️ Fecha</th><th style="width:12%">🌤️ Estado</th><th style="width:12%">⏳ Límite</th><th style="width:11%">🔗 Enlace</th><th style="width:36px"></th></tr></thead>
   <tbody>${filas||`<tr><td colspan="8" class="empty">Sin roles todavía.</td></tr>`}</tbody></table></div>
   <div><button data-act="addRol">+ Agregar rol</button></div>`;
 };
@@ -488,14 +521,14 @@ V.oficiales=()=>{
   const c=x=>S.oficiales.filter(o=>o.estado===x).length;
   return `<div class="row between"><h2>🎀 Posibles oficiales</h2><button class="primary" data-act="addOf">+ Oficial</button></div>
   <div class="counts"><span class="c-mint">🌸 Disponibles: <strong>${c("Disponible")}</strong></span><span class="c-rose">💌 Ocupados: <strong>${c("Ocupado")}</strong></span></div>
-  <div class="tbl-wrap"><table><thead><tr><th>🎓 Oficial</th><th>💌 Relación</th><th>🗓️ Fecha</th><th>🌤️ Estado</th><th>🔗 Enlace</th><th></th></tr></thead><tbody>
+  <div class="tbl-wrap"><table class="stack"><thead><tr><th style="width:34%">🎓 Oficial</th><th style="width:21%">💌 Relación</th><th style="width:12%">🗓️ Fecha</th><th style="width:13%">🌤️ Estado</th><th style="width:16%">🔗 Enlace</th><th style="width:36px"></th></tr></thead><tbody>
   ${S.oficiales.map(o=>`<tr data-oid="${o.id}">
-    <td><input class="cell" style="min-width:14rem;font-weight:600" data-of="nombre" value="${esc(o.nombre)}" aria-label="Oficial"></td>
-    <td><input class="cell" style="min-width:10rem" data-of="relacion" value="${esc(o.relacion)}" aria-label="Relación"></td>
-    <td><input class="cell" style="min-width:8rem" data-of="fecha" value="${esc(o.fecha)}" aria-label="Fecha" placeholder="AAAA-MM-DD o texto"></td>
-    <td>${chipSel(OF_EST,o.estado,'data-of="estado" aria-label="Estado"')}</td>
-    <td>${linkCell(o.enlace,'data-of="enlace"')}</td>
-    <td><button class="ghost" data-act="delOf" aria-label="Borrar">✕</button></td></tr>`).join("")||`<tr><td colspan="6" class="empty">Anotá acá los oficiales que te interesan.</td></tr>`}
+    <td class="wide" data-l="🎓 Oficial"><input class="cell" style="min-width:14rem;font-weight:600" data-of="nombre" value="${esc(o.nombre)}" aria-label="Oficial"></td>
+    <td data-l="💌 Relación"><input class="cell" style="min-width:10rem" data-of="relacion" value="${esc(o.relacion)}" aria-label="Relación"></td>
+    <td data-l="🗓️ Fecha"><input class="cell" style="min-width:8rem" data-of="fecha" value="${esc(o.fecha)}" aria-label="Fecha" placeholder="AAAA-MM-DD o texto"></td>
+    <td data-l="🌤️ Estado">${chipSel(OF_EST,o.estado,'data-of="estado" aria-label="Estado"')}</td>
+    <td data-l="🔗 Enlace">${linkCell(o.enlace,'data-of="enlace"')}</td>
+    <td class="del"><button class="ghost" data-act="delOf" aria-label="Borrar">✕</button></td></tr>`).join("")||`<tr><td colspan="6" class="empty">Anotá acá los oficiales que te interesan.</td></tr>`}
   </tbody></table></div>`;
 };
 
@@ -587,6 +620,7 @@ function party(big){
 /* ---------- render y eventos ---------- */
 const panel=document.getElementById("panel");
 function render(){
+  migrar();
   applySkin();
   updateMood();
   document.getElementById("owner").value=S.owner||"";
@@ -621,7 +655,7 @@ function setField(el){
   else return false;
   return true;
 }
-panel.addEventListener("input",e=>{if(e.target.matches("input"))if(setField(e.target))save();});
+panel.addEventListener("input",e=>{if(e.target.type==="color"){const t=e.target.closest(".con-p")?.querySelector("input.cell");if(t)t.style.color=e.target.value;e.target.parentElement.classList.remove("unset");}if(e.target.matches("input"))if(setField(e.target))save();});
 panel.addEventListener("change",e=>{if(e.target.matches("input,select")){if(setField(e.target)){save();render();}}});
 
 panel.addEventListener("click",e=>{
@@ -631,6 +665,8 @@ panel.addEventListener("click",e=>{
   switch(a){
     case"keep":S.ejemplo=false;return done();
     case"trato":{S.trato=b.dataset.k;save();render();const t=TRATO[S.trato];if(moodState().m==="happy")party(true);else toast(`Anotado: ${t.e} ${t.l}`);return;}
+    case"add2":{const r=p.roles.find(x=>x.id===tr.dataset.rid);r.dos=true;if(r.con2===undefined){r.con2="";r.color2="";}done();panel.querySelector(`[data-rid="${r.id}"] [data-f="con2"]`)?.focus();return;}
+    case"del2":{const r=p.roles.find(x=>x.id===tr.dataset.rid);r.dos=false;r.con2="";r.color2="";return done();}
     case"moodOff":S.moodOff=true;toast("Carita oculta. Tocá la carita de arriba para traerla");return done();
     case"toImport":return nav("copia");
     case"impReplace":case"impAdd":{if(!pendingImport)return;applyImport(pendingImport,a==="impReplace");pendingImport=null;return done();}
@@ -642,7 +678,7 @@ panel.addEventListener("click",e=>{
     case"addPj":{const t=TONOS[S.personajes.length%TONOS.length];const n=nuevoPj("Nuevo personaje","✨",t);S.personajes.push(n);pjSel=n.id;save();return nav("personajes");}
     case"tono":p.tono=b.dataset.t;return done();
     case"delPj":return armDelete(b,()=>{S.personajes=S.personajes.filter(x=>x.id!==p.id);pjSel=null;done();toast("Personaje borrado");});
-    case"addRol":p.roles.push({id:uid(),nombre:"",con:"",casa:"",tipo:"Libre",fecha:"",estado:"Sin Contestar",limite:"",enlace:""});done();
+    case"addRol":p.roles.push({id:uid(),nombre:"",con:"",color:"",tipo:"Libre",fecha:"",estado:"Sin Contestar",limite:"",enlace:""});done();
       {const ins=panel.querySelectorAll('[data-f="nombre"]');ins[ins.length-1]?.focus();}return;
     case"delRol":return armDelete(b,()=>{p.roles=p.roles.filter(x=>x.id!==tr.dataset.rid);done();});
     case"addMis":S.turnos.misiones.push({id:uid(),nombre:"Nueva misión",faltasMaster:0,n:12,t:[]});return done();
@@ -697,7 +733,7 @@ function parseWorkbook(wb){
       const titulo=rows.slice(0,h).flat().find(c=>String(c).trim())||name;
       const pj={id:uid(),nombre:cleanName(name)||cleanName(titulo)||"Personaje",emoji:firstEmoji(titulo)||"✨",tono:"",roles:[],ganancias:[]};
       rows.slice(h+1).forEach(r=>{const nm=String(r[ci.nombre]??"").trim();if(!nm)return;
-        pj.roles.push({id:uid(),nombre:nm,con:ci.con>=0?String(r[ci.con]??"").trim():"",casa:"",
+        pj.roles.push({id:uid(),nombre:nm,con:ci.con>=0?String(r[ci.con]??"").trim():"",color:"",
           tipo:ci.tipo>=0?matchList(TIPOS,r[ci.tipo],"Libre"):"Libre",fecha:ci.fecha>=0?asFecha(r[ci.fecha]):"",
           estado:ci.estado>=0?matchList(ESTADOS,r[ci.estado],"Sin Contestar"):"Sin Contestar",limite:ci.lim>=0?asISO(r[ci.lim]):"",
           enlace:ci.enlace>=0?String(r[ci.enlace]??"").trim():""});});
@@ -784,7 +820,7 @@ function importView(){
     ${r.misiones.length?`<li>🎮 ${r.misiones.length} ${r.misiones.length===1?"misión":"misiones"} en el control de turnos${r.tarifas?" + tarifas":""}</li>`:""}
     ${r.fijos.length?`<li>💳 ${r.fijos.length} pagos fijos</li>`:""}
     ${r.avisos.length?`<li class="muted">Hojas que no reconocí y salteé: ${r.avisos.map(esc).join(", ")}</li>`:""}
-  </ul><p class="small muted" style="margin:0">El color de casa del «Con» no viene en el Excel: elegilo después en cada rol.</p>
+  </ul><p class="small muted" style="margin:0">El color de cada compañero no viene en el Excel: elegilo después con la ruedita de cada rol.</p>
   <div class="row"><button class="primary" data-act="impReplace">Reemplazar mi registro</button><button data-act="impAdd">Sumar a lo que tengo</button><button class="ghost" data-act="impCancel">Cancelar</button></div></div>`:"";
   return `<section style="display:grid;gap:12px"><h2>📥 Importar desde Excel</h2>
   <p style="margin:0;max-width:62ch">Subí tu planilla de roles. Leo una hoja por personaje (con las columnas Nombre de rol, Con, Tipo de Rol, Fecha, Estado y Fecha Límite), y si están, también Posibles Oficiales, Control de turnos y Ganancias Mensuales.</p>
