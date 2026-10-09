@@ -181,6 +181,16 @@ html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!i
 :root[data-skin="pixel"] .skin-b i{border-radius:0}
 .skin-b[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--fg)}
 /* enlaces */
+.tit{display:flex;align-items:center;gap:6px;min-width:0}
+.tit input.cell{flex:1;min-width:0;font-weight:600}
+.go-tab{flex:none;display:inline-flex;align-items:center;gap:4px;font-family:var(--ff-head);font-size:.75rem;line-height:1;text-decoration:none;white-space:nowrap;padding:5px 10px;border-radius:999px;background:var(--accent);color:var(--surface);box-shadow:0 1px 0 var(--line)}
+.go-tab:hover{filter:brightness(1.08)}
+.go-tab:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+:root[data-skin="pixel"] .go-tab{border-radius:0;box-shadow:2px 2px 0 var(--line)}
+.lnk-btn{flex:none;padding:3px 6px!important;font-size:.85rem;opacity:.55}
+.lnk-btn:hover,.lnk-btn.on{opacity:1}
+.lnk-edit{display:flex;align-items:center;gap:6px;margin-top:4px}
+.lnk-edit input.cell{flex:1;min-width:0;font-size:.82rem;background:var(--surface-2);border-color:var(--line)}
 .link-cell{display:flex;align-items:center;gap:2px;min-width:9rem}
 .link-cell input{font-size:.8rem;color:var(--muted)}
 .go{text-decoration:none;font-size:.95rem;padding:2px 6px;border-radius:6px;color:var(--accent)}
@@ -417,6 +427,9 @@ async function initDb(){
 
 /* ---------- utilidades ---------- */
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2200);}
+let linkOpen=null;
+function tituloRol(r){const u=safeUrl(r.enlace);
+  return `<div class="tit"><input class="cell" data-f="nombre" value="${esc(r.nombre)}" aria-label="Nombre de rol" placeholder="Nombre del rol (podés pegar el enlace acá)">${u?`<a class="go-tab" href="${esc(u)}" target="_blank" rel="noopener" title="Abrir el rol en el foro">↗ Ir al rol</a>`:""}<button class="ghost lnk-btn${linkOpen===r.id?" on":""}" data-act="lnk" title="${u?"Cambiar el enlace del rol":"Agregar el enlace del rol"}" aria-label="${u?"Cambiar enlace":"Agregar enlace"}" aria-expanded="${linkOpen===r.id}">🔗</button></div>${linkOpen===r.id?`<div class="lnk-edit"><input class="cell" data-f="enlace" value="${esc(r.enlace||"")}" placeholder="Pegá el enlace del tema en el foro" aria-label="Enlace del rol"><button class="ghost" data-act="lnkOk">Listo</button></div>`:""}`;}
 function conRow(nombre,color,fN,fC,ph,extra){const has=/^#[0-9a-f]{6}$/i.test(color||"");
   return `<div class="con-p"><label class="wheel${has?"":" unset"}" title="Elegir color"><input type="color" data-f="${fC}" value="${has?color:"#ffffff"}" aria-label="Color de ${ph}"></label><input class="cell" data-f="${fN}" value="${esc(nombre||"")}" aria-label="${ph}" placeholder="${ph}"${has?` style="color:${color}"`:""}>${extra||""}</div>`;}
 function migrar(){S.personajes.forEach(p=>p.roles.forEach(r=>{if(r.casa!==undefined){if(!r.color){const k=String(r.casa).toLowerCase().replace("ex-","");r.color=CASA_HEX[k]||"";}delete r.casa;}}));}
@@ -469,13 +482,12 @@ V.personajes=()=>{
   if(!p)return sel+`<p class="empty">Agregá tu primer personaje para empezar a anotar sus roles.</p>`;
   const c=cuenta(p);
   const filas=p.roles.map(r=>{const l=limEstado(r);return `<tr data-rid="${r.id}">
-    <td class="wide" data-l="📖 Nombre de rol"><input class="cell" style="min-width:14rem;font-weight:600" data-f="nombre" value="${esc(r.nombre)}" aria-label="Nombre de rol" placeholder="Nombre del rol"></td>
+    <td class="wide" data-l="📖 Nombre de rol">${tituloRol(r)}</td>
     <td data-l="💌 Con"><div class="con">${conRow(r.con,r.color,"con","color","Con quién",r.dos?"":`<button class="ghost add2" data-act="add2" title="Sumar otro PJ a este rol" aria-label="Sumar otro PJ">+ PJ</button>`)}${r.dos?conRow(r.con2,r.color2,"con2","color2","Otro PJ",`<button class="ghost" data-act="del2" title="Quitar este PJ" aria-label="Quitar segundo PJ">✕</button>`):""}</div></td>
     <td data-l="🏷️ Tipo">${chipSel(TIPOS,r.tipo,'data-f="tipo" aria-label="Tipo de rol"')}</td>
     <td data-l="🗓️ Fecha"><input class="cell" style="min-width:8rem" data-f="fecha" value="${esc(r.fecha)}" aria-label="Fecha" placeholder="Fecha en el rol"></td>
     <td data-l="🌤️ Estado">${chipSel(ESTADOS,r.estado,'data-f="estado" aria-label="Estado"')}</td>
     <td data-l="⏳ Fecha límite" class="${l?"lim-"+l:""}"><input type="date" class="cell" data-f="limite" value="${esc(r.limite)}" aria-label="Fecha límite"></td>
-    <td data-l="🔗 Enlace">${linkCell(r.enlace,'data-f="enlace"')}</td>
     <td class="del"><button class="ghost" data-act="delRol" aria-label="Borrar rol">✕</button></td></tr>`;}).join("");
   return sel+`
   <div class="pj-head t-${p.tono}">
@@ -486,7 +498,7 @@ V.personajes=()=>{
     <button class="ghost" data-act="delPj">Borrar personaje</button>
   </div>
   <div class="counts">${ESTADOS.map(([n,t,e])=>`<span class="c-${t}">${e} ${n}: <strong>${c[n]}</strong></span>`).join("")}</div>
-  <div class="tbl-wrap"><table class="stack"><thead><tr><th style="width:18%">📖 Nombre de rol</th><th style="width:23%">💌 Con</th><th style="width:11%">🏷️ Tipo</th><th style="width:11%">🗓️ Fecha</th><th style="width:12%">🌤️ Estado</th><th style="width:12%">⏳ Límite</th><th style="width:11%">🔗 Enlace</th><th style="width:36px"></th></tr></thead>
+  <div class="tbl-wrap"><table class="stack"><thead><tr><th style="width:29%">📖 Nombre de rol</th><th style="width:23%">💌 Con</th><th style="width:11%">🏷️ Tipo</th><th style="width:11%">🗓️ Fecha</th><th style="width:12%">🌤️ Estado</th><th style="width:12%">⏳ Límite</th><th style="width:36px"></th></tr></thead>
   <tbody>${filas||`<tr><td colspan="8" class="empty">Sin roles todavía.</td></tr>`}</tbody></table></div>
   <div><button data-act="addRol">+ Agregar rol</button></div>`;
 };
@@ -655,6 +667,12 @@ function setField(el){
   else return false;
   return true;
 }
+/* Pegar un enlace en el título del rol lo guarda como enlace */
+panel.addEventListener("paste",e=>{const el=e.target;if(!el.matches||!el.matches('[data-f="nombre"]'))return;
+  const txt=(e.clipboardData||window.clipboardData)?.getData("text")?.trim()||"";if(!/^https?:\/\/\S+$/i.test(txt))return;
+  const tr=el.closest("[data-rid]"),p=pjById(pjSel),r=p&&tr&&p.roles.find(x=>x.id===tr.dataset.rid);if(!r)return;
+  e.preventDefault();r.enlace=txt;linkOpen=null;save();render();toast("Enlace guardado: tocá «↗ Ir al rol» para abrirlo");});
+panel.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches('[data-f="enlace"]')){e.preventDefault();e.target.blur();linkOpen=null;render();}});
 panel.addEventListener("input",e=>{if(e.target.type==="color"){const t=e.target.closest(".con-p")?.querySelector("input.cell");if(t)t.style.color=e.target.value;e.target.parentElement.classList.remove("unset");}if(e.target.matches("input"))if(setField(e.target))save();});
 panel.addEventListener("change",e=>{if(e.target.matches("input,select")){if(setField(e.target)){save();render();}}});
 
@@ -665,6 +683,8 @@ panel.addEventListener("click",e=>{
   switch(a){
     case"keep":S.ejemplo=false;return done();
     case"trato":{S.trato=b.dataset.k;save();render();const t=TRATO[S.trato];if(moodState().m==="happy")party(true);else toast(`Anotado: ${t.e} ${t.l}`);return;}
+    case"lnk":{const id=tr.dataset.rid;linkOpen=linkOpen===id?null:id;render();panel.querySelector(`[data-rid="${id}"] [data-f="enlace"]`)?.focus();return;}
+    case"lnkOk":linkOpen=null;return render();
     case"add2":{const r=p.roles.find(x=>x.id===tr.dataset.rid);r.dos=true;if(r.con2===undefined){r.con2="";r.color2="";}done();panel.querySelector(`[data-rid="${r.id}"] [data-f="con2"]`)?.focus();return;}
     case"del2":{const r=p.roles.find(x=>x.id===tr.dataset.rid);r.dos=false;r.con2="";r.color2="";return done();}
     case"moodOff":S.moodOff=true;toast("Carita oculta. Tocá la carita de arriba para traerla");return done();
