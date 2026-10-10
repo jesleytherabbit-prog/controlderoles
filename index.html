@@ -138,6 +138,55 @@ html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!i
 .drop input{position:absolute;width:1px;height:1px;opacity:0}
 .imp-sum{display:grid;gap:10px;padding:16px;border-radius:var(--r);border:var(--bw) solid var(--line);background:var(--surface-2)}
 .imp-sum ul{margin:0;padding-left:1.2em;display:grid;gap:3px}
+
+/* bóveda */
+.bov-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}
+@media (max-width:820px){.bov-grid{grid-template-columns:1fr}}
+.bov-card{border-radius:var(--r);padding:18px 20px;display:grid;gap:14px;border:var(--bw) solid currentColor}
+.bov-h{font-family:var(--ff-display);font-size:1.35rem}
+.bov-g{display:grid;gap:6px}
+.bov-g+.bov-g{padding-top:12px;border-top:1px dashed currentColor}
+.bov-l{display:flex;align-items:center;gap:8px;font-family:var(--ff-head)}
+.flor{font-size:1.05em;width:1.2em;text-align:center}
+.bov-lbl{flex:1;min-width:0}
+input.bov-n{width:9ch!important;background:var(--surface);border-color:currentColor;color:var(--fg);font-weight:600}
+.bov-links{border:var(--bw) solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:10px;align-content:start;background:var(--surface-2)}
+.bov-link{display:grid;gap:2px}
+.bov-link .bov-lbl{font-family:var(--ff-head);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.bov-link input.cell{font-size:.82rem;background:var(--surface);border-color:var(--line)}
+.bov-tx{display:grid;gap:12px;border:var(--bw) solid var(--line);border-radius:var(--r);padding:16px 18px}
+.bov-f{display:grid;gap:4px}
+.bov-f .lbl,.bov-codes .lbl{font-family:var(--ff-head);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.bov-tx input.bov-d{width:12ch;border:1px solid var(--line);font-size:1.1rem;font-weight:600;border-color:var(--line);background:var(--surface-2)}
+.bov-tx textarea.bov-enl{resize:vertical;border:1px solid var(--line);font-family:var(--ff-body);border-color:var(--line);background:var(--surface-2);font-size:.9rem}
+.bov-prev{display:flex;align-items:baseline;gap:8px;font-family:var(--ff-head);font-size:1.15rem;font-variant-numeric:tabular-nums;padding:6px 12px;border-radius:var(--r);background:var(--accent-soft)}
+.bov-prev strong{color:var(--accent);font-size:1.35rem}
+.bov-prev .pos{color:var(--mint-fg)} .bov-prev .neg{color:var(--rose-fg)}
+.bov-enls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+.bov-tx input.bov-u{border:1px solid var(--line);background:var(--surface-2);font-size:.88rem}
+.bov-div{font-size:1.1em;color:var(--accent)}
+.bov-codes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px}
+.bov-codes .code-box{min-height:130px;resize:vertical}
+
+/* log de movimientos */
+.bov-log-wrap{display:grid;gap:8px}
+.bov-log{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:.82rem;background:var(--surface-2);border:var(--bw) solid var(--line);border-radius:var(--r);padding:8px 0;max-height:320px;overflow-y:auto}
+.lg{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:5px 14px;border-left:3px solid transparent;font-variant-numeric:tabular-nums}
+.lg:nth-child(even){background:color-mix(in srgb,var(--surface) 45%,transparent)}
+.lg.last{border-left-color:var(--accent)}
+.lg-t{color:var(--muted)}
+.lg-n{min-width:5ch;text-align:right}
+.lg-d{font-weight:700;min-width:6ch}
+.lg-d.pos{color:var(--mint-fg)} .lg-d.neg{color:var(--rose-fg)}
+.lg-a{font-weight:700;color:var(--accent)}
+.lg-tot{color:var(--muted)}
+.lg-l{flex:1;min-width:0}
+.lg-l a{color:var(--accent);text-underline-offset:2px}
+.lg-sep{color:var(--muted)}
+.lg-x{padding:0 6px!important;font-size:.75rem;opacity:.5}
+.lg:hover .lg-x{opacity:1}
+.lg-nota{font:inherit;color:var(--fg);background:transparent;border:1px dashed var(--line);border-radius:4px;padding:1px 6px;flex:1;min-width:10ch}
+.empty-log{color:var(--muted)}
 .mini-face{border:0;background:none;padding:0;font-size:1.3rem;line-height:1;cursor:pointer}
 .mood-rain{position:absolute;inset:0;pointer-events:none}
 .mood-rain i{position:absolute;top:-12px;width:2px;height:10px;border-radius:2px;background:currentColor;opacity:.35}
@@ -209,8 +258,8 @@ h3{font-size:1.05rem;font-weight:400;margin:0}
 .status{font-family:var(--ff-head);font-size:.8rem;color:var(--muted);display:flex;gap:6px;align-items:center}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--mint-fg)}
 .dot.local{background:var(--peach-fg)}
-.tabs{display:flex;gap:4px;margin-top:20px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
-.tabs a{padding:10px 14px;text-decoration:none;color:var(--muted);border-radius:var(--r) var(--r) 0 0;white-space:nowrap;font-size:.95rem;border:1px solid transparent;border-bottom:0;margin-bottom:-1px}
+.tabs{display:flex;flex-wrap:wrap;gap:4px 2px;margin-top:20px;border-bottom:1px solid var(--line)}
+.tabs a{padding:9px clamp(8px,1.1vw,14px);text-decoration:none;color:var(--muted);border-radius:var(--r) var(--r) 0 0;white-space:nowrap;font-size:.95rem;border:1px solid transparent;border-bottom:0;margin-bottom:-1px}
 .tabs a[aria-current="page"]{color:var(--accent);background:var(--surface);border-color:var(--line)}
 .tabs a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .panel{background:var(--surface);border:1px solid var(--line);border-top:0;border-radius:0 0 var(--r) var(--r);padding:20px clamp(12px,3vw,24px);display:grid;gap:24px}
@@ -329,6 +378,7 @@ details summary{cursor:pointer;font-family:var(--ff-head);color:var(--accent)}
     <a href="#turnos" data-tab="turnos">🎮 Control de turnos</a>
     <a href="#oficiales" data-tab="oficiales">🎀 Posibles oficiales</a>
     <a href="#ganancias" data-tab="ganancias">🍯 Ganancias</a>
+    <a href="#boveda" data-tab="boveda">🏦 Bóveda</a>
     <a href="#copia" data-tab="copia">📥 Importar y copia</a>
   </nav>
   <main class="panel" id="panel"></main>
@@ -373,7 +423,7 @@ function ejemplo(){
   const fj=[{id:uid(),nombre:"💰 Sueldo mensual",monto:125},{id:uid(),nombre:"📰 Columna en el periódico",monto:75}];
   return {v:1,ejemplo:true,owner:"",skin:"pastel",
     personajes:[
-      {id:uid(),nombre:"Personaje 1",emoji:"🌿",tono:"mint",
+      {id:uid(),nombre:"Personaje 1",emoji:"🌿",tono:"mint",boveda:{ini:35,tot:27314,act:35,plt:0,pla:0,l1:"https://hp-avada-kedavra.foroactivo.com/t35871-boveda-990#677949",l2:"https://hp-avada-kedavra.foroactivo.com/t35871p60-boveda-990#734794",l3:"https://hp-avada-kedavra.foroactivo.com/t35871p60-boveda-990#716416",delta:"+125",enl:""},
        roles:[
         {id:uid(),nombre:"Entre jardines (ejemplo)",con:"Nombre del compañero",color:"#3B6E8C",con2:"Otro PJ",color2:"#C0587E",dos:true,tipo:"Libre",fecha:"Marzo 2033",estado:"Contestado",limite:"",enlace:"https://hp-avada-kedavra.foroactivo.com"},
         {id:uid(),nombre:"Trama grupal (ejemplo)",con:"Grupal",color:"",tipo:"Grupal",fecha:"Agosto 2033",estado:"Sin Contestar",limite:fechaISO(2)},
@@ -564,6 +614,75 @@ V.ganancias=()=>{
   <div><button data-act="addF">+ Pago fijo</button></div></section>`;
 };
 
+/* ---------- bóveda ---------- */
+const FLOR={pastel:"✿",magic:"✧",terror:"†",neutro:"❦",magico:"✶",pixel:"◆"};
+/* divisor de enlaces: solo símbolos de texto (el foro no acepta emojis) */
+const DIV={pastel:"✿",magic:"✧",terror:"†",neutro:"✦",magico:"✶",pixel:"◆"};
+const divisor=()=>DIV[skinOf().id]||"✦";
+function bovEnlaces(b){const d=divisor(),u=x=>String(x||"").trim();const parts=[];
+  if(u(b.pet))parts.push(`[url=${u(b.pet)}]Petición[/url]`);if(u(b.ace))parts.push(`[url=${u(b.ace)}]Aceptación[/url]`);
+  u(b.enl).split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(x=>parts.push(/^https?:\/\//i.test(x)?`[url=${x}]Enlace[/url]`:x));
+  return parts.join(` ${d} `);}
+const BOV_LINKS=[["l1","Primer post"],["l2","Último post"],["l3","Última corrección"]];
+const num=v=>{const n=parseInt(String(v??"").replace(/[^\d-]/g,""),10);return isNaN(n)?0:n;};
+const signo=n=>(n>=0?"+":"")+n;
+function bov(p){if(!p.boveda)p.boveda={ini:0,tot:0,act:0,plt:0,pla:0,l1:"",l2:"",l3:"",delta:"",enl:""};return p.boveda;}
+function bovCalc(b){const d=num(b.delta);return {ini:num(b.act),d,act:num(b.act)+d,tot:num(b.tot)+Math.max(d,0)};}
+function bovCodes(b){const c=bovCalc(b),enl=bovEnlaces(b);
+  const form=`{Grageas iniciales» ${c.ini}\n{Grageas que se añaden/quitan» ${signo(c.d)}\n{Grageas actuales» ${c.act}\n{Grageas totales» ${c.tot}\n{Enlaces» ${enl}`;
+  const html=`<div class="scaja-content"><span class="scaja-form">{Grageas iniciales»</span> ${c.ini}\n<span class="scaja-form">{Grageas que se añaden/quitan»</span> ${signo(c.d)}\n<span class="scaja-form">{Grageas actuales»</span> ${c.act}\n<span class="scaja-form">{Grageas totales»</span> ${c.tot}\n<span class="scaja-form">{Enlaces»</span> ${enl}\n</div>`;
+  return {c,form,html};}
+function updateBovCode(){const p=pjById(pjSel);if(!p||tab!=="boveda")return;const {c,form,html}=bovCodes(bov(p));
+  const a=document.getElementById("bovForm"),h=document.getElementById("bovHtml");if(a)a.value=form;if(h)h.value=html;
+  const pv=document.getElementById("bovPrev");if(pv)pv.innerHTML=bovPrev(c);}
+function bovPrev(c){return `<span>${c.ini}</span><span class="op ${c.d<0?"neg":"pos"}">${signo(c.d)}</span><span>=</span><strong>${c.act}</strong><span class="muted small">· totales ${c.tot}</span>${c.act<0?`<span class="small" style="color:var(--rose-fg)">⚠ no te alcanzan las grageas</span>`:""}`;}
+function fmtAt(iso){try{const d=new Date(iso);return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;}catch(_){return"";}}
+function bovLog(b){const L=b.log||[];
+  return `<section class="bov-log-wrap"><div class="row between"><h3>📜 Últimos movimientos</h3><div class="row">${L.length?`<button data-act="bovUndo" title="Vuelve los números a como estaban antes del último movimiento">↶ Deshacer el último</button>`:""}<button class="ghost" data-act="bovAddLog" title="Agregar una línea de nota al registro">+ nota</button></div></div>
+  <div class="bov-log" role="log" aria-label="Últimos movimientos">${L.length?L.map((e,i)=>`<div class="lg${i===0?" last":""}" data-lid="${e.id}">
+    <span class="lg-t">[${esc(fmtAt(e.at))}]</span>
+    ${e.nota!==undefined?`<input class="lg-nota" data-lf="nota" value="${esc(e.nota)}" aria-label="Nota">`:`<span class="lg-n">${e.ini}</span><span class="lg-d ${e.d<0?"neg":"pos"}">${signo(e.d)}</span><span class="lg-a">→ ${e.act}</span><span class="lg-tot">tot ${e.tot}</span>`}
+    <span class="lg-l">${[["Petición",e.pet],["Aceptación",e.ace]].filter(x=>safeUrl(x[1])).map(([l,u])=>`<a href="${esc(safeUrl(u))}" target="_blank" rel="noopener">${l}</a>`).join(` <span class="lg-sep">${esc(divisor())}</span> `)}</span>
+    <button class="ghost lg-x" data-act="bovDelLog" data-id="${e.id}" aria-label="Borrar movimiento">✕</button></div>`).join(""):`<div class="lg empty-log">&gt; Todavía no hay movimientos. Cuando toques «Ya lo publiqué», queda anotado acá.</div>`}</div></section>`;}
+V.boveda=()=>{
+  if(!pjSel||!pjById(pjSel))pjSel=S.personajes[0]?.id||null;
+  const p=pjById(pjSel);const f=FLOR[skinOf().id]||"✿";
+  const sel=`<div class="pjs">${S.personajes.map(x=>`<button class="pj-tab c-${x.tono}" aria-pressed="${x.id===pjSel}" data-act="pj" data-id="${x.id}">${esc(x.emoji)} ${esc(x.nombre)}</button>`).join("")}</div>`;
+  if(!p)return `<h2>🏦 Bóveda</h2><p class="empty">Creá un personaje primero.</p>`;
+  const b=bov(p),{c,form,html}=bovCodes(b),cob=totalPj(p).cob;
+  const line=(k,l)=>`<label class="bov-l" for="bv-${k}"><span class="flor" aria-hidden="true">${f}</span><span class="bov-lbl">${l}:</span><input class="cell num bov-n" type="number" id="bv-${k}" data-bf="${k}" value="${num(b[k])}"></label>`;
+  return `<div class="row between"><h2>🏦 Bóveda</h2>${sel}</div>
+  <div class="bov-grid">
+    <section class="bov-card t-${p.tono}">
+      <div class="bov-h">${esc(p.emoji)} ${esc(p.nombre)}</div>
+      <div class="bov-g">${line("ini","Grageas Iniciales")}${line("tot","Grageas Totales")}${line("act","Grageas Actuales")}</div>
+      <div class="bov-g">${line("plt","Puntos Legendarios Totales")}${line("pla","Puntos Legendarios Actuales")}</div>
+    </section>
+    <section class="bov-links"><h3>🔗 Ir a la bóveda</h3>
+      ${BOV_LINKS.map(([k,l])=>{const u=safeUrl(b[k]);return `<div class="bov-link"><span class="bov-lbl">${l}</span><div class="tit"><input class="cell" data-bf="${k}" value="${esc(b[k]||"")}" placeholder="Pegá el enlace" aria-label="Enlace: ${l}">${u?`<a class="go-tab" href="${esc(u)}" target="_blank" rel="noopener">↗ Ir</a>`:""}</div></div>`;}).join("")}
+    </section>
+  </div>
+  <section class="bov-tx"><h3>🧾 Actualizar la bóveda</h3>
+    <div class="row" style="align-items:end;gap:12px">
+      <label class="bov-f" for="bv-delta"><span class="lbl">Grageas que se añaden/quitan</span><input class="cell bov-d" id="bv-delta" data-bf="delta" value="${esc(b.delta||"")}" placeholder="+125 o -40" inputmode="numeric"></label>
+      ${cob?`<button data-act="bovCob">Usar lo cobrado del mes (+${cob})</button>`:""}
+      <div class="bov-prev" id="bovPrev" aria-live="polite">${bovPrev(c)}</div>
+    </div>
+    <div class="bov-enls">
+      <label class="bov-f" for="bv-pet"><span class="lbl">Enlace de la petición</span><input class="cell bov-u" id="bv-pet" data-bf="pet" value="${esc(b.pet||"")}" placeholder="Pegá el enlace de la petición"></label>
+      <label class="bov-f" for="bv-ace"><span class="lbl">Enlace de la aceptación</span><input class="cell bov-u" id="bv-ace" data-bf="ace" value="${esc(b.ace||"")}" placeholder="Pegá el enlace de la aceptación"></label>
+    </div>
+    <label class="bov-f" for="bv-enl"><span class="lbl">Otros enlaces o texto (opcional, uno por línea)</span><textarea class="cell bov-enl" id="bv-enl" data-bf="enl" rows="2" placeholder="Si hay más enlaces, van acá">${esc(b.enl||"")}</textarea></label>
+    <p class="small muted" style="margin:0">Divisor entre enlaces: <strong class="bov-div">${esc(divisor())}</strong> (cambia con el tema). Queda así: <code>[url=…]Petición[/url] ${esc(divisor())} [url=…]Aceptación[/url]</code></p>
+    <div class="bov-codes">
+      <div><div class="row between"><span class="lbl">Formulario</span><button data-act="copyTxt" data-t="bovForm">Copiar</button></div><textarea class="code-box" id="bovForm" readonly rows="6" aria-label="Formulario">${esc(form)}</textarea></div>
+      <div><div class="row between"><span class="lbl">Código para la bóveda</span><button class="primary" data-act="copyTxt" data-t="bovHtml">Copiar código</button></div><textarea class="code-box" id="bovHtml" readonly rows="6" aria-label="Código de la bóveda">${esc(html)}</textarea></div>
+    </div>
+    <div class="row"><button class="primary" data-act="bovApply">✓ Ya lo publiqué: actualizar mis números</button><span class="small muted">Iniciales pasa a ser lo que tenías, Actuales y Totales se actualizan, y se limpia la transacción. Lo que gastás no resta de Totales.</span></div>
+  </section>
+  ${bovLog(b)}`;
+};
+
 V.copia=()=>importView()+`<h2>💾 Copia de seguridad</h2>
   <p style="margin:0;max-width:62ch">${store.kind==="db"?"Tu registro se guarda en tu cuenta y lo ves solo vos.":"Tu registro se guarda en este navegador. Si cambiás de dispositivo o borrás los datos del navegador, se pierde."} Copiá el código de vez en cuando y guardalo donde quieras; pegándolo acá lo recuperás.</p>
   <div style="display:grid;gap:8px"><textarea class="code-box" id="exp" readonly aria-label="Código del registro">${esc(JSON.stringify(S))}</textarea><div><button class="primary" data-act="copy">Copiar código</button></div></div>
@@ -644,7 +763,7 @@ function go(t){if(!V[t])t="inicio";tab=t;render();}
 function nav(t){go(t);try{history.replaceState(null,"","#"+tab);}catch(_){}}
 document.getElementById("tabs").addEventListener("click",e=>{const a=e.target.closest("a[data-tab]");if(!a)return;e.preventDefault();nav(a.dataset.tab);});
 window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);if(h&&h!==tab)go(h);});
-document.getElementById("skins").addEventListener("click",e=>{const b=e.target.closest("[data-skin]");if(!b)return;S.skin=b.dataset.skin;save();applySkin();toast("Tema: "+skinOf().nombre);});
+document.getElementById("skins").addEventListener("click",e=>{const b=e.target.closest("[data-skin]");if(!b)return;S.skin=b.dataset.skin;save();render();toast("Tema: "+skinOf().nombre);});
 document.getElementById("miniFace").addEventListener("click",()=>{if(S.moodOff){S.moodOff=false;save();toast("La carita volvió 🙂");}nav("inicio");});
 document.getElementById("owner").addEventListener("input",e=>{S.owner=e.target.value;save();});
 
@@ -663,6 +782,8 @@ function setField(el){
   else if(el.dataset.tf){S.turnos.tarifas[el.dataset.tf]=v;}
   else if(el.dataset.of){const o=S.oficiales.find(x=>x.id===tr.dataset.oid);if(o)o[el.dataset.of]=v;}
   else if(el.dataset.gf){const pj=pjById(card.dataset.pid);const g=pj&&pj.ganancias.find(x=>x.id===tr.dataset.gid);if(g)g[el.dataset.gf]=v;}
+  else if(el.dataset.lf){const pj=pjById(pjSel);const lid=el.closest("[data-lid]")?.dataset.lid;const e=pj&&(bov(pj).log||[]).find(x=>x.id===lid);if(e)e[el.dataset.lf]=el.value;else return false;}
+  else if(el.dataset.bf){const pj=pjById(pjSel);if(!pj)return false;const k=el.dataset.bf;bov(pj)[k]=["delta","enl","pet","ace","l1","l2","l3"].includes(k)?el.value:num(el.value);}
   else if(el.dataset.ff){const f=S.fijos.find(x=>x.id===tr.dataset.fid);if(f)f[el.dataset.ff]=v;}
   else return false;
   return true;
@@ -673,8 +794,8 @@ panel.addEventListener("paste",e=>{const el=e.target;if(!el.matches||!el.matches
   const tr=el.closest("[data-rid]"),p=pjById(pjSel),r=p&&tr&&p.roles.find(x=>x.id===tr.dataset.rid);if(!r)return;
   e.preventDefault();r.enlace=txt;linkOpen=null;save();render();toast("Enlace guardado: tocá «↗ Ir al rol» para abrirlo");});
 panel.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches('[data-f="enlace"]')){e.preventDefault();e.target.blur();linkOpen=null;render();}});
-panel.addEventListener("input",e=>{if(e.target.type==="color"){const t=e.target.closest(".con-p")?.querySelector("input.cell");if(t)t.style.color=e.target.value;e.target.parentElement.classList.remove("unset");}if(e.target.matches("input"))if(setField(e.target))save();});
-panel.addEventListener("change",e=>{if(e.target.matches("input,select")){if(setField(e.target)){save();render();}}});
+panel.addEventListener("input",e=>{if(e.target.dataset.bf&&setField(e.target)){save();updateBovCode();return;}if(e.target.type==="color"){const t=e.target.closest(".con-p")?.querySelector("input.cell");if(t)t.style.color=e.target.value;e.target.parentElement.classList.remove("unset");}if(e.target.matches("input"))if(setField(e.target))save();});
+panel.addEventListener("change",e=>{if(e.target.dataset&&e.target.dataset.bf&&!["l1","l2","l3"].includes(e.target.dataset.bf))return;if(e.target.matches("input,select")){if(setField(e.target)){save();render();}}});
 
 panel.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]");if(!b)return;
@@ -712,6 +833,14 @@ panel.addEventListener("click",e=>{
     case"addF":S.fijos.push({id:uid(),nombre:"Nuevo pago",monto:0});return done();
     case"delF":return armDelete(b,()=>{const id=tr.dataset.fid;S.fijos=S.fijos.filter(x=>x.id!==id);S.personajes.forEach(pj=>pj.ganancias.forEach(g=>{if(g.fijo===id)g.fijo="";}));done();});
     case"resetMes":S.personajes.forEach(pj=>pj.ganancias.forEach(g=>g.estado="Sin Cobrar"));toast("Mes nuevo: todo sin cobrar");return done();
+    case"copyTxt":{const ta=document.getElementById(b.dataset.t);if(!ta)return;const fb=()=>{ta.focus();ta.select();toast("Seleccionado: copialo con Ctrl+C");};
+      try{navigator.clipboard.writeText(ta.value).then(()=>toast("Copiado ✨"),fb);}catch(_){fb();}return;}
+    case"bovUndo":{const bb=bov(p),e=bb.log&&bb.log[0];if(!e)return;bb.ini=e.ini0;bb.act=e.act0;bb.tot=e.tot0;bb.log.shift();toast("Deshecho: volviste a "+e.act0+" grageas");return done();}
+    case"bovDelLog":return armDelete(b,()=>{const bb=bov(p);bb.log=(bb.log||[]).filter(x=>x.id!==b.dataset.id);done();});
+    case"bovAddLog":{const bb=bov(p);bb.log=bb.log||[];bb.log.unshift({id:uid(),at:new Date().toISOString(),ini0:num(bb.ini),act0:num(bb.act),tot0:num(bb.tot),ini:num(bb.act),d:0,act:num(bb.act),tot:num(bb.tot),enl:"",nota:"Nota",pet:"",ace:""});return done();}
+    case"bovCob":{const bb=bov(p);bb.delta="+"+totalPj(p).cob;return done();}
+    case"bovApply":{const bb=bov(p),c=bovCalc(bb);if(!c.d){toast("Escribí cuántas grageas se añaden o quitan");return;}const d0=new Date();bb.log=bb.log||[];bb.log.unshift({id:uid(),at:d0.toISOString(),ini0:num(bb.ini),act0:num(bb.act),tot0:num(bb.tot),ini:c.ini,d:c.d,act:c.act,tot:c.tot,enl:bovEnlaces(bb),pet:String(bb.pet||"").trim(),ace:String(bb.ace||"").trim()});if(bb.log.length>150)bb.log.length=150;
+      bb.ini=c.ini;bb.act=c.act;bb.tot=c.tot;bb.delta="";bb.enl="";bb.pet="";bb.ace="";toast(`Bóveda actualizada: ${c.act} grageas`);return done();}
     case"copy":{const ta=document.getElementById("exp");const ok=()=>toast("Código copiado");
       try{navigator.clipboard.writeText(ta.value).then(ok,()=>{ta.select();toast("Seleccionado: copialo con Ctrl+C");});}catch(_){ta.select();toast("Seleccionado: copialo con Ctrl+C");}return;}
     case"import":{try{const d=JSON.parse(document.getElementById("imp").value.trim());if(!d||!Array.isArray(d.personajes))throw 0;S=d;S.ejemplo=false;pjSel=null;toast("Registro cargado");done();}catch(_){toast("Ese código no es válido: revisá que esté completo");}return;}
